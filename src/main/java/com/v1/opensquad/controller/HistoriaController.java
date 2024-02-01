@@ -21,7 +21,7 @@ public class HistoriaController {
 
     @PostMapping()
     public ResponseEntity<HistoriaDTO> save(@RequestBody HistoriaDTO historiaDTO,
-                                           @RequestHeader("token") String token,
+                                           @RequestHeader("Authorization") String token,
                                            @RequestParam("idsquad") Long idsquad
     ) {
         return ResponseEntity.ok(historiaService.save(idsquad, token, historiaDTO));

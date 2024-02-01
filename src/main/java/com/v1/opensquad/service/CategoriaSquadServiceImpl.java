@@ -26,11 +26,7 @@ public class CategoriaSquadServiceImpl implements CategoriaSquadService{
     private final AutenticacaoRepository autenticacaoRepository;
 
     @Override
-    public CategoriaSquadDTO save(String token, CategoriaSquadDTO categoriaSquadDTO) {
-        Autenticacao autenticacao = autenticacaoRepository.findByToken(token);
-        if(autenticacao == null){
-            throw new AuthDataException("Token Inválido!");
-        }
+    public CategoriaSquadDTO save(CategoriaSquadDTO categoriaSquadDTO) {
         CategoriaSquad categoriaSquad = categoriaSquadRepository.save(categoriaSquadMapper.map(categoriaSquadDTO));
         return categoriaSquadMapper.map(categoriaSquad);
     }

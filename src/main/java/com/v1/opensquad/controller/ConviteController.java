@@ -5,6 +5,7 @@ import com.v1.opensquad.dto.ConviteDTO;
 import com.v1.opensquad.dto.ParticipanteDTO;
 import com.v1.opensquad.dto.SquadDTO;
 import com.v1.opensquad.service.ConviteService;
+import com.v1.opensquad.service.ParticipanteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +20,11 @@ public class ConviteController {
 
     private final ConviteService conviteService;
 
+
+
     @PostMapping()
     public ResponseEntity<ConviteDTO> save(@RequestBody ConviteDTO conviteDTO,
-                                         @RequestHeader("token") String token,
+                                         @RequestHeader("Authorization") String token,
                                          @RequestParam("usuario") String usuario,
                                          @RequestParam("idsquad") Long idsquad
     ) {

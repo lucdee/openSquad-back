@@ -22,7 +22,7 @@ public class AuthController {
     }
 
     @GetMapping("/verificar")
-    public ResponseEntity<RetornoPerfilDTO> save(@RequestParam("token") String token) {
+    public ResponseEntity<RetornoPerfilDTO> save(@RequestHeader("Authorization") String token) {
         return ResponseEntity.ok(autenticacaoService.verificar(token));
     }
 }

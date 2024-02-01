@@ -14,6 +14,7 @@ public class PerfilDTO {
     private Long id;
     private String email;
     private String nomeCompleto;
+    private String senha;
     private String usuario;
     private String dataNascimento;
     private Integer level;

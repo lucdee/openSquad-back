@@ -44,16 +44,24 @@ public class ConviteServiceImpl implements ConviteService{
     private final SquadServiceImpl squadService;
 
 
+
     @Override
     public ConviteDTO save(String token, ConviteDTO conviteDTO,  String usuario, Long idsquad) {
         Autenticacao autenticacao = autenticacaoRepository.findByToken(token);
         if(autenticacao == null){
             throw new AuthDataException("Token Inválido!");
         }
-       List<Perfil> perfil =  perfilRepository.findByUsuario(usuario);
+        List<Perfil> perfil =  perfilRepository.findByUsuario(usuario);
 
         if(perfil.size() == 0){
             throw new ProfileDataException("Usuário não encontrado");
+        }
+
+       List<ParticipanteDTO> participantes = participanteService.findBySquad(idsquad);
+        for(ParticipanteDTO participanteDTO : participantes){
+           if( participanteDTO.getIdPerfil().getUsuario().equals(usuario)){
+               throw new ProfileDataException("Esse usuário já faz parte do squad");
+           }
         }
 
        Optional<Squad> squad = squadRepository.findById(idsquad);

@@ -23,7 +23,7 @@ public class ParticipanteController {
 
     @GetMapping("/findparticipacao")
     public ResponseEntity<String> findByToken(
-            @RequestHeader("token") String token,
+            @RequestHeader("Authorization") String token,
             @RequestParam("idsquad") Long idsquad) {
         return ResponseEntity.ok(participanteService.verificarStatusParticipantePorSquad(token, idsquad));
     }

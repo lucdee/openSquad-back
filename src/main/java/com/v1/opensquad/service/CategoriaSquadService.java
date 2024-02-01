@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CategoriaSquadService {
 
-    CategoriaSquadDTO save(String token, CategoriaSquadDTO categoriaSquadDTO);
+    CategoriaSquadDTO save( CategoriaSquadDTO categoriaSquadDTO);
 
     List<CategoriaSquadDTO> findAll();
 }

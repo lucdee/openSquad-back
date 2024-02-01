@@ -20,7 +20,7 @@ public class TarefaController {
 
     @PostMapping()
     public ResponseEntity<TarefaDTO> save(@RequestBody TarefaDTO tarefaDTO,
-                                            @RequestHeader("token") String token,
+                                            @RequestHeader("Authorization") String token,
                                             @RequestParam("idhistoria") Long idhistoria
     ) {
         return ResponseEntity.ok(tarefaService.save(token, idhistoria, tarefaDTO));

@@ -20,7 +20,7 @@ public class VagaController {
 
     @PostMapping()
     public ResponseEntity<VagaDTO> save(@RequestBody VagaDTO vagaDTO,
-                                         @RequestHeader("token") String token,
+                                         @RequestHeader("Authorization") String token,
                                          @RequestParam("idsquad") Long idsquad
     ) {
         return ResponseEntity.ok(vagaService.save(token, vagaDTO, idsquad));

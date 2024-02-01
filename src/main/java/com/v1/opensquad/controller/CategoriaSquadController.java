@@ -23,8 +23,7 @@ public class CategoriaSquadController {
 
     @PostMapping()
     public ResponseEntity<CategoriaSquadDTO> save(
-            @RequestHeader("token") String token,
             @RequestBody CategoriaSquadDTO categoriaSquadDTO) {
-        return ResponseEntity.ok(squadService.save(token, categoriaSquadDTO));
+        return ResponseEntity.ok(squadService.save(categoriaSquadDTO));
     }
 }

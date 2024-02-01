@@ -22,7 +22,7 @@ public class SquadController {
 
     @PostMapping()
     public ResponseEntity<SquadDTO> save(@RequestBody SquadDTO squadDTO,
-                                         @RequestHeader("token") String token,
+                                         @RequestHeader("Authorization") String token,
                                          @RequestParam("funcao-criador") String funcaoCriador,
                                          @RequestParam("carga-horaria") Integer cargaHoraria,
                                           @RequestParam("categoriaid") Integer categoriaId
