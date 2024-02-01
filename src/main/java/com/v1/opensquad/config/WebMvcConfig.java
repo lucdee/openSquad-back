@@ -1,3 +1,4 @@
+/*
 package com.v1.opensquad.config;
 
 import com.fasterxml.jackson.core.filter.TokenFilter;
@@ -22,4 +23,4 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/auth/**", "/convite/**", "/contador/**", "/squad/**", "/participante/**", "/vaga/**", "/categoriasquad/**", "/historia");
 
     }
-}
+}*/

@@ -1,3 +1,4 @@
+/*
 package com.v1.opensquad.config;
 
 import com.v1.opensquad.repository.AutenticacaoRepository;
@@ -34,4 +35,4 @@ public class MyTokenFilter implements HandlerInterceptor {
             return false;
         }
     }
-}
+}*/
