@@ -12,6 +12,5 @@ public interface ConviteService {
 
     List<ConviteDTO> convitesPorPerfil(String token);
 
-
     ParticipanteDTO alterarStatus(String token, Integer idConvite, String status);
 }
