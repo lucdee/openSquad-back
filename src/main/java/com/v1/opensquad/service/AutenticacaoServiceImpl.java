@@ -71,7 +71,7 @@ public class AutenticacaoServiceImpl implements AutenticacaoService{
     }
 
     @Override
-    public RetornoPerfilDTO verificar(String token) {
+    public RetornoPerfilDTO verificarPerfil(String token) {
         Autenticacao autenticacao = autenticacaoRepository.findByToken(token);
         if(autenticacao == null){
             throw new AuthDataException("Token não encontrado");

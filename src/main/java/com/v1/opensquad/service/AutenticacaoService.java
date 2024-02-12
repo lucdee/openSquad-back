@@ -8,6 +8,6 @@ public interface AutenticacaoService {
 
     AutenticacaoRetornoDTO auth(AutenticacaoDTO autenticacaoDTO);
 
-    RetornoPerfilDTO verificar(String token);
+    RetornoPerfilDTO verificarPerfil(String token);
 
 }

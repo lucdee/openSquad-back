@@ -55,6 +55,10 @@ public class SquadController {
         return ResponseEntity.ok(squadService.findById(id));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<SquadDTO> findById(@RequestHeader("Authorization") String token,@PathVariable("id") Long id) throws IOException {
+        return ResponseEntity.ok(squadService.deleteById(id, token));
+    }
 
     @GetMapping("/findbyfilters")
     public ResponseEntity<List<SquadDTO>> findByCategoria(

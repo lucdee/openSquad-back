@@ -19,4 +19,6 @@ public interface SquadService {
     String salvarFotoSquad(String token,Long idsquad,Long idFoto);
 
     SquadDTO findById(Long id);
+
+    SquadDTO deleteById(Long id, String token);
 }

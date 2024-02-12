@@ -2,15 +2,14 @@ package com.v1.opensquad.service;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.v1.opensquad.dto.ParticipanteDTO;
+import com.v1.opensquad.dto.RetornoPerfilDTO;
 import com.v1.opensquad.dto.SquadDTO;
-import com.v1.opensquad.entity.Autenticacao;
-import com.v1.opensquad.entity.CategoriaSquad;
-import com.v1.opensquad.entity.Participante;
-import com.v1.opensquad.entity.Squad;
+import com.v1.opensquad.entity.*;
 import com.v1.opensquad.mapper.CategoriaSquadMapper;
 import com.v1.opensquad.mapper.SquadMapper;
 import com.v1.opensquad.repository.*;
 import com.v1.opensquad.service.exception.AuthDataException;
+import com.v1.opensquad.service.exception.ProfileDataException;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoProperties;
 import org.springframework.cloud.client.hypermedia.DiscoveredResource;
@@ -47,6 +46,8 @@ public class SquadServiceImpl implements SquadService{
     public final CategoriaSquadMapper categoriaSquadMapper;
 
     public final ParticipanteRepository participanteRepository;
+
+    public final AutenticacaoService autenticacaoService;
 
     public final SquadMapper squadMapper;
 
@@ -159,5 +160,21 @@ public class SquadServiceImpl implements SquadService{
       squads.add(squad.get());
         List<SquadDTO> squadDTO = getSquadDTOSImages(squads);
       return squadDTO.get(0);
+    }
+
+    @Override
+    public SquadDTO deleteById(Long id, String token) {
+        RetornoPerfilDTO retornoPerfilDTO = autenticacaoService.verificarPerfil(token);
+        Participante participante = participanteRepository.findByIdPerfilIdAndIdSquadId(retornoPerfilDTO.getId(), id);
+        if(participante.getStatus().equals("D")){
+            Optional<Squad> squad = squadRepository.findById(id);
+            if(squad.isPresent()){
+                squadRepository.deleteById(id);
+                return squadMapper.map(squad.get());
+            }
+        }else {
+           throw new ProfileDataException("você não possui status de dono para excluir o squad");
+        }
+        return null;
     }
 }
