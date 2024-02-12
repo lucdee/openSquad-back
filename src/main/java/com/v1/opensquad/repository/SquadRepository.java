@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface SquadRepository extends JpaRepository<Squad, Long> {
 
-    List<Squad> findByAreaIdAndNomeContainingIgnoreCase(Integer idcategoria, String nome);
+    List<Squad> findByAreaIdAndNomeContainingIgnoreCase(Long idcategoria, String nome);
 
     List<Squad> findByNome(String nome);
 

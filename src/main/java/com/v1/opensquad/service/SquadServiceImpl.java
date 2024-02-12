@@ -141,9 +141,8 @@ public class SquadServiceImpl implements SquadService{
             return getSquadDTOSImages(squads);
         }
 
-        List<Squad> squads = squadRepository.findByAreaIdAndNomeContainingIgnoreCase(Math.toIntExact(idcategoria), (nomesquad!=null ? nomesquad : ""));
-        return getSquadDTOSImages(squads);
-
+        List<Squad> squads = squadRepository.findByAreaIdAndNomeContainingIgnoreCase(Long.valueOf(idcategoria), (nomesquad!=null ? nomesquad : ""));
+        return  squadMapper.mapToDTO(squads);
     }
 
     @Override
