@@ -35,7 +35,7 @@ public class PerfilServiceImpl implements PerfilService{
         perfilDto.setExp(0);
         perfilDto.setDataCriacao(String.valueOf(LocalDateTime.now()));
         perfilDto.setPremium("S");
-        perfilDto.setStatus("A");
+        perfilDto.setStatus("D");
 
        Perfil perfilSave =  perfilRepository.save(perfilMapper.map(perfilDto));
         return perfilMapper.map(perfilSave);
