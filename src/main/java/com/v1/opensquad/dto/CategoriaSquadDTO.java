@@ -14,7 +14,7 @@ public class CategoriaSquadDTO {
 
 
     @JsonProperty("value")
-    private Integer id;
+    private Long id;
 
     @JsonProperty("label")
     private String descricao;

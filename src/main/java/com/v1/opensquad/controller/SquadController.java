@@ -31,13 +31,13 @@ public class SquadController {
     }
 
 
-    @PostMapping(consumes = { "multipart/form-data"})
+    @PostMapping("/salvarFoto")
     public ResponseEntity<String> salvarFotoSquad(
                                          @RequestHeader("token") String token,
                                          @RequestParam("idsquad") Long idsquad,
-                                         @RequestParam(value = "file", required = false) MultipartFile file
+                                         @RequestParam("idFoto") Long idFoto
     ) {
-        return ResponseEntity.ok(squadService.salvarFotoSquad(token, idsquad, file));
+        return ResponseEntity.ok(squadService.salvarFotoSquad(token, idsquad, idFoto));
     }
 
     @GetMapping("/findByToken")

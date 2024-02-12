@@ -20,7 +20,7 @@ public class CategoriaSquad {
     @GeneratedValue(strategy = GenerationType.AUTO, generator="seq")
     @GenericGenerator(name = "seq", strategy="increment")
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "descricao")
     private String descricao;

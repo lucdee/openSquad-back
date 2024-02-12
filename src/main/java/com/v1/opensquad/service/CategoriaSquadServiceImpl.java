@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -35,5 +36,15 @@ public class CategoriaSquadServiceImpl implements CategoriaSquadService{
     public List<CategoriaSquadDTO> findAll() {
        List<CategoriaSquad> categoriaSquads = categoriaSquadRepository.findAll();
         return categoriaSquadMapper.map2(categoriaSquads);
+    }
+
+    @Override
+    public CategoriaSquadDTO deleteById(Long idCategoria) {
+       Optional<CategoriaSquad> categoriaSquad = categoriaSquadRepository.findById(idCategoria);
+       if(categoriaSquad.isPresent()){
+           categoriaSquadRepository.deleteById(idCategoria);
+           return categoriaSquadMapper.map(categoriaSquad.get());
+       }
+        throw new AuthDataException("Categoria não encontrada");
     }
 }

@@ -26,4 +26,10 @@ public class CategoriaSquadController {
             @RequestBody CategoriaSquadDTO categoriaSquadDTO) {
         return ResponseEntity.ok(squadService.save(categoriaSquadDTO));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<CategoriaSquadDTO> deleteById(
+            @PathVariable("id") Long id) {
+        return ResponseEntity.ok(squadService.deleteById(id));
+    }
 }

@@ -60,7 +60,7 @@ public class SquadServiceImpl implements SquadService{
            throw new AuthDataException("Token não existente");
        }
 
-        Optional<CategoriaSquad> categoriaSquad = categoriaSquadRepository.findById(categoriaId);
+        Optional<CategoriaSquad> categoriaSquad = categoriaSquadRepository.findById(Long.valueOf(categoriaId));
         categoriaSquad.ifPresent(squad -> squadDTO.setArea(categoriaSquadMapper.map(squad)));
 
         squadDTO.setStatus("A");
@@ -141,26 +141,14 @@ public class SquadServiceImpl implements SquadService{
     }
 
     @Override
-    public String salvarFotoSquad(String token, Long idsquad, MultipartFile file) {
+    public String salvarFotoSquad(String token, Long idsquad, Long idFoto) {
         //salvando imagem
-        try{
-            if(file != null){
-                byte[] bytes = file.getBytes();
-                Path caminho = Paths.get(caminhoImagens+  + idsquad + file.getOriginalFilename());
-                Files.write((caminho), bytes);
-
-                Optional<Squad> squad = squadRepository.findById(idsquad);
-
-                if(squad.isPresent()){
-                    squad.get().setImgSquad(  idsquad + file.getOriginalFilename() );
-                    squadRepository.saveAndFlush(squad.get());
-                }
-                return "imagem Salva";
-            }
-        }catch (Exception e){
-            e.printStackTrace();
+        Optional<Squad> squad = squadRepository.findById(idsquad);
+        if(squad.isPresent()) {
+            squad.get().setImgSquad(idFoto.toString());
+            squadRepository.save(squad.get());
         }
-        return "Erro ao salvar imagem";
+        return "imagem salva";
     }
 
     @Override

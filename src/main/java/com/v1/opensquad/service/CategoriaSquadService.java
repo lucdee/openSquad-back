@@ -10,4 +10,6 @@ public interface CategoriaSquadService {
     CategoriaSquadDTO save( CategoriaSquadDTO categoriaSquadDTO);
 
     List<CategoriaSquadDTO> findAll();
+
+    CategoriaSquadDTO deleteById(Long idCategoria);
 }
