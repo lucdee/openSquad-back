@@ -26,6 +26,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListResourceBundle;
 import java.util.Optional;
 
 @Service
@@ -48,6 +49,10 @@ public class SquadServiceImpl implements SquadService{
     public final ParticipanteRepository participanteRepository;
 
     public final AutenticacaoService autenticacaoService;
+
+    public final HistoriaRepository historiaRepository;
+
+    public final TarefaRepository tarefaRepository;
 
     public final SquadMapper squadMapper;
 
@@ -167,6 +172,21 @@ public class SquadServiceImpl implements SquadService{
         RetornoPerfilDTO retornoPerfilDTO = autenticacaoService.verificarPerfil(token);
         Participante participante = participanteRepository.findByIdPerfilIdAndIdSquadId(retornoPerfilDTO.getId(), id);
         if(participante.getStatus().equals("D")){
+
+         List<Historia> historias = historiaRepository.findByIdParticipanteId(participante.getId());
+
+
+         for(Historia historia: historias) {
+             List<Tarefa> tarefas = tarefaRepository.findByIdHistoriaId(historia.getId());
+             for (Tarefa tarefa : tarefas) {
+                 historiaRepository.deleteById(tarefa.getId());
+             }
+             historiaRepository.deleteById(historia.getId());
+         }
+           List<Participante> participantes = participanteRepository.findByIdSquadId(id);
+           for(Participante participante1: participantes){
+               participanteRepository.deleteById(participante1.getId());
+           }
             Optional<Squad> squad = squadRepository.findById(id);
             if(squad.isPresent()){
                 squadRepository.deleteById(id);
