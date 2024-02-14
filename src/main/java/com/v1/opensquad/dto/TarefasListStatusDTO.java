@@ -2,7 +2,9 @@ package com.v1.opensquad.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,17 +13,17 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-public class HistoriasListStatusDTO {
+public class TarefasListStatusDTO {
 
-    private List<HistoriaDTO> listaBacklog;
-    private List<HistoriaDTO> listaEmDesenvolvimento;
+    private List<TarefaDTO> listaBacklog;
+    private List<TarefaDTO> listaEmDesenvolvimento;
 
-    private List<HistoriaDTO> listaEmTeste;
-    private List<HistoriaDTO> listaPronto;
+    private List<TarefaDTO> listaEmTeste;
+    private List<TarefaDTO> listaPronto;
 
-    private List<HistoriaDTO> listaArquivado;
+    private List<TarefaDTO> listaArquivado;
 
-    public HistoriasListStatusDTO() {
+    public TarefasListStatusDTO() {
         this.listaBacklog = new ArrayList<>();
         this.listaEmDesenvolvimento = new ArrayList<>();
         this.listaEmTeste = new ArrayList<>();

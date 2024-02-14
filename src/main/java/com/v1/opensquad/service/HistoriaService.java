@@ -9,7 +9,11 @@ public interface HistoriaService {
 
     HistoriaDTO save(Long idSquad, String token, HistoriaDTO historiaDTO);
 
+    HistoriaDTO avancarStatus(String token, Long idHistoria);
+
     HistoriasListStatusDTO findHistoriasBySquad(Long idSquad, Long idparticipante);
+
+    List<HistoriaDTO> findAllAtivas(Long idSquad);
 
     HistoriaDTO findById(Long idHistoria);
 

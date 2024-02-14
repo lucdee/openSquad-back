@@ -3,6 +3,7 @@ package com.v1.opensquad.controller;
 
 import com.v1.opensquad.dto.HistoriaDTO;
 import com.v1.opensquad.dto.TarefaDTO;
+import com.v1.opensquad.dto.TarefasListStatusDTO;
 import com.v1.opensquad.service.HistoriaService;
 import com.v1.opensquad.service.TarefaService;
 import lombok.RequiredArgsConstructor;
@@ -27,11 +28,26 @@ public class TarefaController {
     }
 
 
-    @GetMapping()
+    @GetMapping("/findbyhistoria")
     public ResponseEntity<List<TarefaDTO>> findByHistoria(
                                           @RequestParam("idhistoria") Long idhistoria
     ) {
         return ResponseEntity.ok(tarefaService.findByHistoria( idhistoria));
+    }
+
+    @GetMapping()
+    public ResponseEntity<TarefasListStatusDTO> findBySquad(
+            @RequestParam("idsquad") Long idSquad
+    ) {
+        return ResponseEntity.ok(tarefaService.findAll(idSquad));
+    }
+
+    @PutMapping("/avancar-status")
+    public ResponseEntity<TarefaDTO> avancarStatus(
+            @RequestHeader("Authorization") String token,
+            @RequestParam("idtarefa") Long idtarefa
+    ) {
+        return ResponseEntity.ok(tarefaService.avancarStatus( token, idtarefa));
     }
 
 }

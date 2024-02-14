@@ -38,5 +38,5 @@ public class Tarefa {
     private String fimData;
 
     @Column(name = "status")
-    private String status;
+    private Integer status;
 }

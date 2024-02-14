@@ -27,6 +27,14 @@ public class HistoriaController {
         return ResponseEntity.ok(historiaService.save(idsquad, token, historiaDTO));
     }
 
+    @PutMapping("/avancar-status")
+    public ResponseEntity<HistoriaDTO> avancarStatus(
+                                            @RequestHeader("Authorization") String token,
+                                            @RequestParam("idhistoria") Long idhistoria
+    ) {
+        return ResponseEntity.ok(historiaService.avancarStatus( token, idhistoria));
+    }
+
     @GetMapping()
     public ResponseEntity<HistoriasListStatusDTO> findHistoriasBySquad(
                                             @RequestParam("idsquad") Long idsquad,
@@ -35,5 +43,11 @@ public class HistoriaController {
         return ResponseEntity.ok(historiaService.findHistoriasBySquad(idsquad, idparticipante));
     }
 
+    @GetMapping("/ativas")
+    public ResponseEntity<List<HistoriaDTO>> findHistoriasBySquad(
+            @RequestParam("idsquad") Long idsquad
+    ) {
+        return ResponseEntity.ok(historiaService.findAllAtivas(idsquad));
+    }
 
 }

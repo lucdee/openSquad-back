@@ -24,5 +24,5 @@ public class TarefaDTO {
     private String descricao;
     private String inicioData;
     private String fimData;
-    private String status;
+    private Integer status;
 }

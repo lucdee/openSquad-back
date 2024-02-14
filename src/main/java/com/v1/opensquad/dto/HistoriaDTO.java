@@ -22,5 +22,5 @@ public class HistoriaDTO {
     private String descricao;
     private String finalData;
     private String inicialData;
-    private String status;
+    private Integer status;
 }
