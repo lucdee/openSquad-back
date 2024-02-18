@@ -1,6 +1,7 @@
 package com.v1.opensquad.service;
 
 import com.fasterxml.jackson.core.JsonFactory;
+import com.v1.opensquad.dto.MensagemSquadDTO;
 import com.v1.opensquad.dto.ParticipanteDTO;
 import com.v1.opensquad.dto.RetornoPerfilDTO;
 import com.v1.opensquad.dto.SquadDTO;
@@ -42,6 +43,8 @@ public class SquadServiceImpl implements SquadService{
     public final ParticipanteService participanteService;
 
 
+    public final VagaRepository vagaRepository;
+
     public final CategoriaSquadRepository categoriaSquadRepository;
 
     public final CategoriaSquadMapper categoriaSquadMapper;
@@ -57,6 +60,8 @@ public class SquadServiceImpl implements SquadService{
     public final SquadMapper squadMapper;
 
     private static String caminhoImagens = "C://Users/bocsg/OneDrive/Documentos/opensquad/";
+
+    public final MensagemSquadService mensagemSquadService;
 
 
     @Override
@@ -177,13 +182,26 @@ public class SquadServiceImpl implements SquadService{
          for(Historia historia: historias) {
              List<Tarefa> tarefas = tarefaRepository.findByIdHistoriaId(historia.getId());
              for (Tarefa tarefa : tarefas) {
-                 historiaRepository.deleteById(tarefa.getId());
+                 tarefaRepository.deleteById(tarefa.getId());
              }
              historiaRepository.deleteById(historia.getId());
          }
+
+
+          List<MensagemSquadDTO> mensagemSquads =  mensagemSquadService.findBySquad(token, id);
+         for(MensagemSquadDTO mensagemSquadDTO : mensagemSquads){
+             mensagemSquadService.deleteById(token, mensagemSquadDTO.getId());
+         }
+
+         List<Vaga> vagas = vagaRepository.findByIdsquadId(id);
+         for(Vaga vaga : vagas){
+             vagaRepository.deleteById(vaga.getId());
+         }
            List<Participante> participantes = participanteRepository.findByIdSquadId(id);
            for(Participante participante1: participantes){
+
                participanteRepository.deleteById(participante1.getId());
+
            }
             Optional<Squad> squad = squadRepository.findById(id);
             if(squad.isPresent()){

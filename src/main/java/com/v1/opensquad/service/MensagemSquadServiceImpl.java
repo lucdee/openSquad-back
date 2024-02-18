@@ -68,4 +68,21 @@ public class MensagemSquadServiceImpl implements MensagemSquadService{
        List<MensagemSquadDTO> mensagemSquadList =   mensagemSquadMapper.map(mensagemSquads);
         return mensagemSquadList;
     }
+
+    @Override
+    public String deleteById(String token, Long idMensagem) {
+        Autenticacao autenticacao = autenticacaoRepository.findByToken(token);
+        if(autenticacao == null){
+            throw new AuthDataException("Token Inválido!");
+        }
+      Optional<MensagemSquad> mensagemSquad =  mensagemSquadRepository.findById(idMensagem);
+        if(mensagemSquad.isPresent()){
+            if(mensagemSquad.get().getParticipante().getIdPerfil().getId().equals(autenticacao.getIdPerfil().getId())){
+                mensagemSquadRepository.deleteById(idMensagem);
+                return "deletada";
+            }
+        }
+      return "Erro ao deletar";
+
+    }
 }

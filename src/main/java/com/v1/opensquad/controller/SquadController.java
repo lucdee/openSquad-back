@@ -56,7 +56,7 @@ public class SquadController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<SquadDTO> findById(@RequestHeader("Authorization") String token,@PathVariable("id") Long id) throws IOException {
+    public ResponseEntity<SquadDTO> deleteById(@RequestHeader("Authorization") String token,@PathVariable("id") Long id) throws IOException {
         return ResponseEntity.ok(squadService.deleteById(id, token));
     }
 
