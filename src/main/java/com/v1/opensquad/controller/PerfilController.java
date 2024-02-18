@@ -15,8 +15,10 @@ public class PerfilController {
     private final PerfilService perfilService;
 
     @PostMapping()
-    public ResponseEntity<PerfilDTO> save(@RequestBody PerfilDTO perfilDto) {
-        return ResponseEntity.ok(perfilService.save(perfilDto));
+    public ResponseEntity<PerfilDTO> save(@RequestBody PerfilDTO perfilDto,
+                                          @RequestParam("isGoogle") Boolean isGoogle
+                                          ) {
+        return ResponseEntity.ok(perfilService.save(perfilDto, isGoogle));
     }
 
 }

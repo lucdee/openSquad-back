@@ -30,21 +30,27 @@ public class AutenticacaoServiceImpl implements AutenticacaoService{
     private final PerfilMapper perfilMapper;
 
     @Override
-    public AutenticacaoRetornoDTO auth(AutenticacaoDTO autenticacaoDTO) {
+    public AutenticacaoRetornoDTO auth(AutenticacaoDTO autenticacaoDTO, Boolean isGoogle) {
         List<Perfil> perfilByEmail = perfilRepository.findByEmail(autenticacaoDTO.getEmailUsuario());
         List<Perfil> perfilByUsuario = perfilRepository.findByUsuario(autenticacaoDTO.getEmailUsuario());
         Perfil perfilEncontrado = null;
 
-        if(perfilByUsuario.size() == 0 && perfilByEmail != null){
-            perfilEncontrado = perfilByEmail.get(0);
-        }else if(perfilByUsuario != null && perfilByEmail.size() == 0){
-            perfilEncontrado = perfilByUsuario.get(0);
-        }else {
-            throw new ProfileDataException("Perfil não encontrado com o email ou usuario");
-        }
-        if(!perfilEncontrado.getSenha().equals(autenticacaoDTO.getSenha())){
-            throw new ProfileDataException("Senha Incorreta");
-        }
+
+            if(perfilByEmail != null){
+                perfilEncontrado = perfilByEmail.get(0);
+            }else if(perfilByUsuario != null && perfilByEmail.size() == 0){
+                perfilEncontrado = perfilByUsuario.get(0);
+            }else if(perfilByUsuario == null && perfilByEmail == null){
+                throw new ProfileDataException("Perfil não encontrado com o email ou usuario");
+            }
+            if(isGoogle == null || isGoogle == false){
+                if(!perfilEncontrado.getSenha().equals(autenticacaoDTO.getSenha())){
+                    throw new ProfileDataException("Senha Incorreta");
+                }
+            }
+
+
+
 
 
         Autenticacao autenticacao = new Autenticacao();

@@ -22,22 +22,40 @@ public class PerfilServiceImpl implements PerfilService{
 
 
     @Override
-    public PerfilDTO save(PerfilDTO perfilDto) {
-        List<Perfil> perfil = perfilRepository.findByEmail(perfilDto.getEmail());
-        if(perfil.size()!= 0 ){
-            throw new ProfileDataException("Já existe uma conta com esse email");
-        }
-        List<Perfil> perfil1 = perfilRepository.findByUsuario(perfilDto.getUsuario());
-        if(perfil1.size()!= 0){
-            throw new ProfileDataException("Já existe uma conta com esse usuário");
-        }
-        perfilDto.setLevel(0);
-        perfilDto.setExp(0);
-        perfilDto.setDataCriacao(String.valueOf(LocalDateTime.now()));
-        perfilDto.setPremium("S");
-        perfilDto.setStatus("A");
+    public PerfilDTO save(PerfilDTO perfilDto, Boolean isGoogle) {
 
-       Perfil perfilSave =  perfilRepository.save(perfilMapper.map(perfilDto));
-        return perfilMapper.map(perfilSave);
+        if(!isGoogle){
+            List<Perfil> perfil = perfilRepository.findByEmail(perfilDto.getEmail());
+            if(perfil.size()!= 0 ){
+                throw new ProfileDataException("Já existe uma conta com esse email");
+            }
+            List<Perfil> perfil1 = perfilRepository.findByUsuario(perfilDto.getUsuario());
+            if(perfil1.size()!= 0){
+                throw new ProfileDataException("Já existe uma conta com esse usuário");
+            }
+            perfilDto.setLevel(0);
+            perfilDto.setExp(0);
+            perfilDto.setDataCriacao(String.valueOf(LocalDateTime.now()));
+            perfilDto.setPremium("S");
+            perfilDto.setStatus("A");
+
+            Perfil perfilSave =  perfilRepository.save(perfilMapper.map(perfilDto));
+            return perfilMapper.map(perfilSave);
+        }else {
+            List<Perfil> perfil =   perfilRepository.findByEmail(perfilDto.getEmail());
+            if(perfil.size() != 0){
+                return perfilMapper.map(perfil.get(0));
+            }else {
+                perfilDto.setLevel(0);
+                perfilDto.setExp(0);
+                perfilDto.setDataCriacao(String.valueOf(LocalDateTime.now()));
+                perfilDto.setPremium("S");
+                perfilDto.setStatus("A");
+
+                Perfil perfilSave =  perfilRepository.save(perfilMapper.map(perfilDto));
+                return perfilMapper.map(perfilSave);
+            }
+        }
+
     }
 }

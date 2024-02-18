@@ -6,7 +6,7 @@ import com.v1.opensquad.dto.auth.AutenticacaoRetornoDTO;
 
 public interface AutenticacaoService {
 
-    AutenticacaoRetornoDTO auth(AutenticacaoDTO autenticacaoDTO);
+    AutenticacaoRetornoDTO auth(AutenticacaoDTO autenticacaoDTO, Boolean isGoogle);
 
     RetornoPerfilDTO verificarPerfil(String token);
 

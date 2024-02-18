@@ -17,8 +17,10 @@ public class AuthController {
     private final AutenticacaoService autenticacaoService;
 
     @PostMapping()
-    public ResponseEntity<AutenticacaoRetornoDTO> auth(@RequestBody AutenticacaoDTO autenticacaoDTO) {
-        return ResponseEntity.ok(autenticacaoService.auth(autenticacaoDTO));
+    public ResponseEntity<AutenticacaoRetornoDTO> auth(@RequestBody AutenticacaoDTO autenticacaoDTO,
+                                                     @RequestParam(value = "isGoogle", required = false) Boolean isGoogle
+                                                       ) {
+        return ResponseEntity.ok(autenticacaoService.auth(autenticacaoDTO, isGoogle));
     }
 
     @GetMapping("/verificar")
