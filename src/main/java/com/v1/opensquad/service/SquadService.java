@@ -16,7 +16,7 @@ public interface SquadService {
     List<SquadDTO> findAll() throws IOException;
 
     List<SquadDTO> findByCategoria(Integer idcategoria, String nomesquad) throws IOException;
-    String salvarFotoSquad(String token,Long idsquad,Long idFoto);
+    String salvarFotoSquad(String token,Long idsquad,String urlFoto);
 
     SquadDTO findById(Long id);
 

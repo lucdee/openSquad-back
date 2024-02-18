@@ -102,7 +102,7 @@ public class SquadServiceImpl implements SquadService{
             squad.ifPresent(squads::add);
         }
 
-        return getSquadDTOSImages(squads);
+        return squadMapper.mapToDTO(squads);
     }
 
     public List<SquadDTO> getSquadDTOSImages(List<Squad> squads) {
@@ -125,7 +125,7 @@ public class SquadServiceImpl implements SquadService{
     @Override
     public List<SquadDTO> findAll() throws IOException {
             List<Squad> squad = squadRepository.findAll();
-            return getSquadDTOSImages(squad);
+            return  squadMapper.mapToDTO(squad);
     }
 
     @Override
@@ -146,11 +146,11 @@ public class SquadServiceImpl implements SquadService{
     }
 
     @Override
-    public String salvarFotoSquad(String token, Long idsquad, Long idFoto) {
+    public String salvarFotoSquad(String token, Long idsquad, String urlFoto) {
         //salvando imagem
         Optional<Squad> squad = squadRepository.findById(idsquad);
         if(squad.isPresent()) {
-            squad.get().setImgSquad(idFoto.toString());
+            squad.get().setImgSquad(urlFoto);
             squadRepository.save(squad.get());
         }
         return "imagem salva";
@@ -159,11 +159,10 @@ public class SquadServiceImpl implements SquadService{
     @Override
     public SquadDTO findById(Long id) {
       Optional<Squad> squad = squadRepository.findById(id);
-      List<Squad> squads = new ArrayList<>();
-
-      squads.add(squad.get());
-        List<SquadDTO> squadDTO = getSquadDTOSImages(squads);
-      return squadDTO.get(0);
+    if(squad!= null){
+        return squadMapper.map(squad.get());
+    }
+    return null;
     }
 
     @Override

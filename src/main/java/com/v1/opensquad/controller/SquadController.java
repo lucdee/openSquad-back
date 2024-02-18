@@ -35,9 +35,9 @@ public class SquadController {
     public ResponseEntity<String> salvarFotoSquad(
                                          @RequestHeader("token") String token,
                                          @RequestParam("idsquad") Long idsquad,
-                                         @RequestParam("idFoto") Long idFoto
+                                         @RequestParam("idFoto") String urlFoto
     ) {
-        return ResponseEntity.ok(squadService.salvarFotoSquad(token, idsquad, idFoto));
+        return ResponseEntity.ok(squadService.salvarFotoSquad(token, idsquad, urlFoto));
     }
 
     @GetMapping("/findByToken")

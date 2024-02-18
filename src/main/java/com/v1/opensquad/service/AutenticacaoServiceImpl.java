@@ -43,7 +43,7 @@ public class AutenticacaoServiceImpl implements AutenticacaoService{
             }else if(perfilByUsuario == null && perfilByEmail == null){
                 throw new ProfileDataException("Perfil não encontrado com o email ou usuario");
             }
-            if(isGoogle == null || isGoogle == false){
+            if(isGoogle == null || !isGoogle){
                 if(!perfilEncontrado.getSenha().equals(autenticacaoDTO.getSenha())){
                     throw new ProfileDataException("Senha Incorreta");
                 }
