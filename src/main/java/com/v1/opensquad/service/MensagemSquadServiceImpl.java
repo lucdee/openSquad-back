@@ -46,6 +46,9 @@ public class MensagemSquadServiceImpl implements MensagemSquadService{
       Optional<Squad> squad =  squadRepository.findById(idsquad);
 
       Participante participante= participanteRepository.findByIdPerfilIdAndIdSquadId(autenticacao.getIdPerfil().getId(), idsquad);
+      if(participante == null){
+          throw new AuthDataException("Somente participantes do squad podem mandar mensagens");
+      }
       if(squad.isPresent()){
           mensagemSquadDTO.setDataEnvio(LocalDateTime.now());
           mensagemSquadDTO.setSquad(squad.get());

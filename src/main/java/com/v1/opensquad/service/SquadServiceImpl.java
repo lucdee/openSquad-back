@@ -110,22 +110,6 @@ public class SquadServiceImpl implements SquadService{
         return squadMapper.mapToDTO(squads);
     }
 
-    public List<SquadDTO> getSquadDTOSImages(List<Squad> squads) {
-        List<SquadDTO> squadDTOS = squadMapper.mapToDTO(squads);
-
-        for (SquadDTO squadDTO : squadDTOS) {
-            if (squadDTO.getImgSquad() != null && !squadDTO.getImgSquad().isEmpty()) {
-                try {
-                    File imagemArquivo = new File(caminhoImagens + squadDTO.getImgSquad());
-                    squadDTO.setImgSquadfile(Files.readAllBytes(imagemArquivo.toPath()));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return squadDTOS;
-    }
 
     @Override
     public List<SquadDTO> findAll() throws IOException {
@@ -138,12 +122,12 @@ public class SquadServiceImpl implements SquadService{
 
         if(idcategoria == null && (nomesquad == null || nomesquad.isEmpty())){
             List<Squad> squads = squadRepository.findAll();
-            return getSquadDTOSImages(squads);
+            return squadMapper.mapToDTO(squads);
         }
 
         if(idcategoria == null){
             List<Squad> squads = squadRepository.findByNome(nomesquad);
-            return getSquadDTOSImages(squads);
+            return squadMapper.mapToDTO(squads);
         }
 
         List<Squad> squads = squadRepository.findByAreaIdAndNomeContainingIgnoreCase(Long.valueOf(idcategoria), (nomesquad!=null ? nomesquad : ""));

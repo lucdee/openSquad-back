@@ -39,6 +39,10 @@ public class HistoriaServiceImpl implements HistoriaService{
             throw new AuthDataException("Token Inválido!");
         }
       Participante participante = participanteRepository.findByIdPerfilIdAndIdSquadId(autenticacao.getIdPerfil().getId(), idSquad);
+
+        if(participante == null){
+            throw new AuthDataException("Somente participantes do squad podem criar histórias.");
+        }
       historiaDTO.setIdParticipante(participante);
       historiaDTO.setStatus(1);
       historiaDTO.setInicialData(String.valueOf(LocalDateTime.now()));

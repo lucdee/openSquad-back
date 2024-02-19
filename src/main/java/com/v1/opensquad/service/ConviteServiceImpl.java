@@ -92,10 +92,10 @@ public class ConviteServiceImpl implements ConviteService{
         for(ConviteDTO conviteDTO : conviteDTOS){
            squadDTOS.add(conviteDTO.getIdSquad());
         }
-        List<SquadDTO> squadDTOS1 = squadService.getSquadDTOSImages(squadMapper.mapToEntity(squadDTOS));
+
 
         for(ConviteDTO conviteDTO : conviteDTOS){
-            for(SquadDTO squadDTO : squadDTOS1){
+            for(SquadDTO squadDTO : squadDTOS){
                 conviteDTO.setIdSquad(squadDTO);
             }
         }

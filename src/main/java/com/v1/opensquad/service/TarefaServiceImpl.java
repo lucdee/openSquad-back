@@ -53,6 +53,11 @@ public class TarefaServiceImpl implements TarefaService {
         }else {
             throw new AuthDataException("historia inexistente!");
         }
+
+        Participante participante = participanteRepository.findByIdPerfilIdAndIdSquadId(autenticacao.getIdPerfil().getId(), tarefaDTO.getIdHistoria().getIdParticipante().getIdSquad().getId());
+        if(participante == null){
+            throw new AuthDataException("Somentes participantes do squad podem criar tarefas.");
+        }
         tarefaDTO.setInicioData(String.valueOf(LocalDateTime.now()));
         tarefaDTO.setStatus(1);
         Tarefa tarefa = tarefaMapper.map(tarefaDTO);
