@@ -159,7 +159,7 @@ public class SquadServiceImpl implements SquadService{
         RetornoPerfilDTO retornoPerfilDTO = autenticacaoService.verificarPerfil(token);
         Participante participante = participanteRepository.findByIdPerfilIdAndIdSquadId(retornoPerfilDTO.getId(), id);
         List<Historia> historias = new ArrayList<>();
-        if(participante == null){
+        if(participante != null){
             historias = historiaRepository.findByIdParticipanteId(participante.getId());
         }
          for(Historia historia: historias) {
