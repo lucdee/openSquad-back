@@ -157,19 +157,13 @@ public class SquadServiceImpl implements SquadService{
     @Override
     public SquadDTO deleteById(Long id, String token) {
         RetornoPerfilDTO retornoPerfilDTO = autenticacaoService.verificarPerfil(token);
-        Participante participantes = participanteRepository.findByIdPerfilIdAndIdSquadId(retornoPerfilDTO.getId(), id);
+     /*   Participante participantes = participanteRepository.findByIdPerfilIdAndIdSquadId(retornoPerfilDTO.getId(), id);*/
 
 
         List<Historia> historias =    historiaRepository.findAll();
         for(Historia historia : historias){
             historiaRepository.deleteById(historia.getId());
         }
-       List<Participante> participantes2 =  participanteRepository.findAll();
-        for(Participante p: participantes2){
-            historiaRepository.deleteById(p.getId());
-        }
-
-
 
 
          for(Historia historia: historias) {
@@ -188,12 +182,12 @@ public class SquadServiceImpl implements SquadService{
          for(Vaga vaga : vagas){
              vagaRepository.deleteById(vaga.getId());
          }
-           List<Participante> participantes3 = participanteRepository.findByIdSquadId(id);
-           for(Participante participante1: participantes3){
+          List<Participante> participantes3 = participanteRepository.findByIdSquadId(id);
+          for(Participante participante1: participantes3){
 
-               participanteRepository.deleteById(participante1.getId());
+              participanteRepository.deleteById(participante1.getId());
 
-           }
+          }
             Optional<Squad> squad = squadRepository.findById(id);
             if(squad.isPresent()){
                 squadRepository.deleteById(id);
