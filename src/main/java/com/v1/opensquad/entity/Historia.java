@@ -38,6 +38,6 @@ public class Historia {
     private String inicialData;
 
     @Column(name = "status")
-    private Integer status;
+    private String status;
 
 }

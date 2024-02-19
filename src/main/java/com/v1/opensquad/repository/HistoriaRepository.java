@@ -9,4 +9,5 @@ import java.util.List;
 public interface HistoriaRepository  extends JpaRepository<Historia, Long> {
 
     List<Historia> findByIdParticipanteId(Long idparticipante);
+
 }
