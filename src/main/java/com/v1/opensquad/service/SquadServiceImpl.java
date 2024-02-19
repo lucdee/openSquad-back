@@ -160,19 +160,9 @@ public class SquadServiceImpl implements SquadService{
      /*   Participante participantes = participanteRepository.findByIdPerfilIdAndIdSquadId(retornoPerfilDTO.getId(), id);*/
 
 
-        List<Historia> historias =    historiaRepository.findAll();
-        for(Historia historia : historias){
-            historiaRepository.deleteById(historia.getId());
-        }
 
 
-         for(Historia historia: historias) {
-             List<Tarefa> tarefas = tarefaRepository.findByIdHistoriaId(historia.getId());
-             for (Tarefa tarefa : tarefas) {
-                 tarefaRepository.deleteById(tarefa.getId());
-             }
-             historiaRepository.deleteById(historia.getId());
-         }
+
           List<MensagemSquadDTO> mensagemSquads =  mensagemSquadService.findBySquad(token, id);
          for(MensagemSquadDTO mensagemSquadDTO : mensagemSquads){
              mensagemSquadService.deleteById(token, mensagemSquadDTO.getId());
