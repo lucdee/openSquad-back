@@ -158,11 +158,7 @@ public class SquadServiceImpl implements SquadService{
     public SquadDTO deleteById(Long id, String token) {
         RetornoPerfilDTO retornoPerfilDTO = autenticacaoService.verificarPerfil(token);
         Participante participante = participanteRepository.findByIdPerfilIdAndIdSquadId(retornoPerfilDTO.getId(), id);
-        if(participante.getStatus().equals("D")){
-
          List<Historia> historias = historiaRepository.findByIdParticipanteId(participante.getId());
-
-
          for(Historia historia: historias) {
              List<Tarefa> tarefas = tarefaRepository.findByIdHistoriaId(historia.getId());
              for (Tarefa tarefa : tarefas) {
@@ -170,8 +166,6 @@ public class SquadServiceImpl implements SquadService{
              }
              historiaRepository.deleteById(historia.getId());
          }
-
-
           List<MensagemSquadDTO> mensagemSquads =  mensagemSquadService.findBySquad(token, id);
          for(MensagemSquadDTO mensagemSquadDTO : mensagemSquads){
              mensagemSquadService.deleteById(token, mensagemSquadDTO.getId());
@@ -192,9 +186,7 @@ public class SquadServiceImpl implements SquadService{
                 squadRepository.deleteById(id);
                 return squadMapper.map(squad.get());
             }
-        }else {
-           throw new ProfileDataException("você não possui status de dono para excluir o squad");
-        }
+
         return null;
     }
 }
