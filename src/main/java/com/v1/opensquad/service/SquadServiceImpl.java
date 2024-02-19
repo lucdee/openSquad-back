@@ -158,7 +158,10 @@ public class SquadServiceImpl implements SquadService{
     public SquadDTO deleteById(Long id, String token) {
         RetornoPerfilDTO retornoPerfilDTO = autenticacaoService.verificarPerfil(token);
         Participante participante = participanteRepository.findByIdPerfilIdAndIdSquadId(retornoPerfilDTO.getId(), id);
-         List<Historia> historias = historiaRepository.findByIdParticipanteId(participante.getId());
+        List<Historia> historias = new ArrayList<>();
+        if(participante == null){
+            historias = historiaRepository.findByIdParticipanteId(participante.getId());
+        }
          for(Historia historia: historias) {
              List<Tarefa> tarefas = tarefaRepository.findByIdHistoriaId(historia.getId());
              for (Tarefa tarefa : tarefas) {
