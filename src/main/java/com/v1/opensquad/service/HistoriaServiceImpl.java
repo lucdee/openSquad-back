@@ -76,6 +76,7 @@ public class HistoriaServiceImpl implements HistoriaService{
         HistoriasListStatusDTO historiasListStatusDTO = new HistoriasListStatusDTO();
 
         for (HistoriaDTO historia : historiaDTOS) {
+            historiaRepository.deleteById(historia.getId());
             if (historia.getStatus().equals(1)) {
                 historiasListStatusDTO.getListaBacklog().add(historia);
             } else if (historia.getStatus().equals(2)) {
