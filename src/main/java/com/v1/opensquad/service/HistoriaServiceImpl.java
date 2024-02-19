@@ -40,7 +40,7 @@ public class HistoriaServiceImpl implements HistoriaService{
         }
       Participante participante = participanteRepository.findByIdPerfilIdAndIdSquadId(autenticacao.getIdPerfil().getId(), idSquad);
       historiaDTO.setIdParticipante(participante);
-      historiaDTO.setStatus("1");
+      historiaDTO.setStatus(1);
       historiaDTO.setInicialData(String.valueOf(LocalDateTime.now()));
       Historia historia = historiaRepository.save(historiaMapper.map(historiaDTO));
       return historiaMapper.map(historia);
@@ -50,9 +50,9 @@ public class HistoriaServiceImpl implements HistoriaService{
     public HistoriaDTO avancarStatus(String token, Long idHistoria) {
         Optional<Historia> historia = historiaRepository.findById(idHistoria);
 
-      /*  if(historia.get().getStatus() > 4){
+        if(historia.get().getStatus() > 4){
             throw new AuthDataException("O item já está arquivado");
-        }*/
+        }
         historia.ifPresent(value -> value.setStatus(value.getStatus() + 1));
         Historia historia1 =   historiaRepository.save(historia.get());
         HistoriaDTO historiaDTO = historiaMapper.map(historia1);
@@ -76,7 +76,6 @@ public class HistoriaServiceImpl implements HistoriaService{
         HistoriasListStatusDTO historiasListStatusDTO = new HistoriasListStatusDTO();
 
         for (HistoriaDTO historia : historiaDTOS) {
-            historiaRepository.deleteById(historia.getId());
             if (historia.getStatus().equals(1)) {
                 historiasListStatusDTO.getListaBacklog().add(historia);
             } else if (historia.getStatus().equals(2)) {

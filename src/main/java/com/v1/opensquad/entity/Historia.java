@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 
 @Builder
 @Setter
@@ -38,6 +39,6 @@ public class Historia {
     private String inicialData;
 
     @Column(name = "status")
-    private String status;
+    private Integer status;
 
 }
