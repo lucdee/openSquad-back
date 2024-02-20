@@ -15,9 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -108,6 +106,7 @@ public class SquadServiceImpl implements SquadService{
     @Override
     public List<SquadDTO> findAll() throws IOException {
             List<Squad> squad = squadRepository.findAll();
+           Collections.sort(squad, Comparator.comparingInt(Squad::getCurtidas).reversed());
             return  squadMapper.mapToDTO(squad);
     }
 
