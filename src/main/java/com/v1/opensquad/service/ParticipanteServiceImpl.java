@@ -1,5 +1,6 @@
 package com.v1.opensquad.service;
 import com.v1.opensquad.dto.ParticipanteDTO;
+import com.v1.opensquad.dto.SquadDTO;
 import com.v1.opensquad.entity.Autenticacao;
 import com.v1.opensquad.entity.Participante;
 import com.v1.opensquad.entity.Perfil;
@@ -44,6 +45,15 @@ public class ParticipanteServiceImpl implements ParticipanteService{
 
        Optional<Perfil> perfil = perfilRepository.findById(idPerfil);
         perfil.ifPresent(participante::setIdPerfil);
+
+        Optional<Squad> squad = squadRepository.findById(participante.getIdSquad().getId());
+        if(squad.isPresent()){
+            if(squad.get().getMembros() == null){
+                squad.get().setMembros(1);
+            }
+            squad.get().setMembros(squad.get().getMembros() + 1);
+            squadRepository.save(squad.get());
+        }
 
         participanteRepository.save(participante);
         return participanteMapper.map(participante);

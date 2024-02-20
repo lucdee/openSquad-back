@@ -19,6 +19,8 @@ public class SquadDTO {
     private CategoriaSquadDTO area;
     private String dataCriacao;
     private String status;
+    private Integer curtidas;
+    private Integer membros;
 
 
 }

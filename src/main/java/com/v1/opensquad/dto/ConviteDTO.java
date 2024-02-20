@@ -6,6 +6,8 @@ import com.v1.opensquad.entity.Perfil;
 import com.v1.opensquad.entity.Squad;
 import lombok.*;
 
+import javax.persistence.Column;
+
 
 @Getter
 @Setter
@@ -24,4 +26,5 @@ public class ConviteDTO {
     private String funcao;
     private String participacao;
     private Long cargahoraria;
+
 }

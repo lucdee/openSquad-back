@@ -43,4 +43,6 @@ public class Convite {
 
     @Column(name = "cargahoraria")
     private Long cargahoraria;
+
+
 }

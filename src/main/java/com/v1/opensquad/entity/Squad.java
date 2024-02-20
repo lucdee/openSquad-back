@@ -38,4 +38,10 @@ public class Squad {
 
     @Column(name = "status")
     private String status;
+
+    @Column(name = "curtidas")
+    private Integer curtidas;
+
+    @Column(name = "membros")
+    private Integer membros;
 }

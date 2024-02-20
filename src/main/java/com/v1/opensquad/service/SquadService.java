@@ -1,5 +1,6 @@
 package com.v1.opensquad.service;
 
+import com.v1.opensquad.dto.CurtidaSquadDTO;
 import com.v1.opensquad.dto.RetornoImagemDTO;
 import com.v1.opensquad.dto.SquadDTO;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,4 +22,7 @@ public interface SquadService {
     SquadDTO findById(Long id);
 
     SquadDTO deleteById(Long id, String token);
+
+    String curtirSquad(Long idSquad, String token);
+
 }

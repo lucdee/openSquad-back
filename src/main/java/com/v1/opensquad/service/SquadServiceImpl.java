@@ -1,6 +1,5 @@
 package com.v1.opensquad.service;
 
-import com.fasterxml.jackson.core.JsonFactory;
 import com.v1.opensquad.dto.MensagemSquadDTO;
 import com.v1.opensquad.dto.ParticipanteDTO;
 import com.v1.opensquad.dto.RetornoPerfilDTO;
@@ -10,24 +9,14 @@ import com.v1.opensquad.mapper.CategoriaSquadMapper;
 import com.v1.opensquad.mapper.SquadMapper;
 import com.v1.opensquad.repository.*;
 import com.v1.opensquad.service.exception.AuthDataException;
-import com.v1.opensquad.service.exception.ProfileDataException;
 import lombok.AllArgsConstructor;
-import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoProperties;
-import org.springframework.cloud.client.hypermedia.DiscoveredResource;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.AccessDeniedException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListResourceBundle;
 import java.util.Optional;
 
 @Service
@@ -63,6 +52,8 @@ public class SquadServiceImpl implements SquadService{
 
     public final MensagemSquadService mensagemSquadService;
 
+    public final CurtidaSquadRepository curtidaSquadRepository;
+
 
     @Override
     public SquadDTO save(String token, SquadDTO squadDTO, String funcaoCriador, Integer cargaHoraria, Integer categoriaId) {
@@ -75,6 +66,9 @@ public class SquadServiceImpl implements SquadService{
         categoriaSquad.ifPresent(squad -> squadDTO.setArea(categoriaSquadMapper.map(squad)));
 
         squadDTO.setStatus("A");
+        squadDTO.setCurtidas(0);
+        squadDTO.setMembros(1);
+
         squadDTO.setDataCriacao(String.valueOf(LocalDateTime.now()));
         Squad squad = squadRepository.save(squadMapper.map(squadDTO));
 
@@ -190,4 +184,31 @@ public class SquadServiceImpl implements SquadService{
 
         return null;
     }
+
+
+    @Override
+    public String curtirSquad(Long idSquad, String token) {
+        RetornoPerfilDTO retornoPerfilDTO = autenticacaoService.verificarPerfil(token);
+        if(retornoPerfilDTO == null){
+            throw new AuthDataException("Token invalido");
+        }
+
+
+        CurtidaSquad curtidaSquad = new CurtidaSquad();
+        curtidaSquad.setIdSquad(idSquad);
+        curtidaSquad.setIdPerfil(retornoPerfilDTO.getId());
+        if(curtidaSquadRepository.findByIdSquadAndAndIdPerfil(idSquad, retornoPerfilDTO.getId()) != null){
+            throw new AuthDataException("Esse perfil ja curtiu o squad");
+        }
+        curtidaSquadRepository.save(curtidaSquad);
+        Optional<Squad> squad =  squadRepository.findById(idSquad);
+        if(squad.isPresent()){
+            List<CurtidaSquad> curtidaSquads = curtidaSquadRepository.findByIdSquad(idSquad);
+            squad.get().setCurtidas(curtidaSquads.size());
+            squadRepository.save(squad.get());
+        }
+        return "Squad Curtido!";
+    }
+
+
 }

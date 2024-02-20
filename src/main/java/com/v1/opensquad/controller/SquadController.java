@@ -66,4 +66,11 @@ public class SquadController {
     @RequestParam(value ="idcategoria", required = false) Integer idcategoria) throws IOException {
         return ResponseEntity.ok(squadService.findByCategoria(idcategoria, nomesquad));
     }
+
+    @PostMapping("/curtir")
+    public ResponseEntity<String> findByCategoria(
+            @RequestParam(value = "idsquad", required = false) Long idsquad,
+            @RequestHeader("Authorization") String token) throws IOException {
+        return ResponseEntity.ok(squadService.curtirSquad(idsquad, token));
+    }
 }
