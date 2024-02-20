@@ -106,7 +106,13 @@ public class SquadServiceImpl implements SquadService{
     @Override
     public List<SquadDTO> findAll() throws IOException {
             List<Squad> squad = squadRepository.findAll();
-           Collections.sort(squad, Comparator.comparingLong(Squad::getCurtidas).reversed());
+            for (Squad squad2 : squad) {
+            if (squad2.getCurtidas() == null) {
+                squad2.setCurtidas(0);
+                squadRepository.save(squad2);
+            }
+        }
+           Collections.sort(squad, Comparator.comparingInt(Squad::getCurtidas).reversed());
             return  squadMapper.mapToDTO(squad);
     }
 
