@@ -11,4 +11,6 @@ public interface MensagemSquadRepository  extends JpaRepository<MensagemSquad, L
 
     List<MensagemSquad> findByParticipanteId(Long idParticipante);
 
+    List<MensagemSquad> findBySquadId(Long idsquad);
+
 }

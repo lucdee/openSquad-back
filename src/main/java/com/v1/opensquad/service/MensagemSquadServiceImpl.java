@@ -67,7 +67,10 @@ public class MensagemSquadServiceImpl implements MensagemSquadService{
             throw new AuthDataException("Token Inválido!");
         }
         Participante participante = participanteRepository.findByIdPerfilIdAndIdSquadId(autenticacao.getIdPerfil().getId(), idsquad);
-        List<MensagemSquad> mensagemSquads =  mensagemSquadRepository.findByParticipanteId(participante.getId());
+        if(participante == null){
+            throw new AuthDataException("É preciso participar do squad para enviar mensagens!");
+        }
+        List<MensagemSquad> mensagemSquads =  mensagemSquadRepository.findBySquadId(idsquad);
        List<MensagemSquadDTO> mensagemSquadList =   mensagemSquadMapper.map(mensagemSquads);
         return mensagemSquadList;
     }
