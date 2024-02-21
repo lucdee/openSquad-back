@@ -74,30 +74,34 @@ public class TarefaServiceImpl implements TarefaService {
     @Override
     public TarefasListStatusDTO findAll(Long idSquad) {
         List<Tarefa> tarefas = new ArrayList<>();
-        List<Historia> historialist = new ArrayList<>();
         List<Participante> participantes = participanteRepository.findByIdSquadId(idSquad);
+
         for (Participante participante : participantes) {
-            historialist.addAll(historiaRepository.findByIdParticipanteId(participante.getId()));
+            List<Historia> historialist = historiaRepository.findByIdParticipanteId(participante.getId());
+
             for(Historia historia : historialist){
-              tarefas.addAll(tarefaRepository.findByIdHistoriaId(historia.getId()));
+                tarefas.addAll(tarefaRepository.findByIdHistoriaId(historia.getId()));
             }
         }
+
         List<TarefaDTO> tarefaDTOS = tarefaMapper.map3(tarefas);
         TarefasListStatusDTO tarefasListStatusDTO = new TarefasListStatusDTO();
+
         for (TarefaDTO tarefaDto : tarefaDTOS) {
             if (tarefaDto.getStatus().equals(1)) {
                 tarefasListStatusDTO.getListaBacklog().add(tarefaDto);
             } else if (tarefaDto.getStatus().equals(2)) {
                 tarefasListStatusDTO.getListaEmDesenvolvimento().add(tarefaDto);
-            }
-            else if (tarefaDto.getStatus().equals(3)) {
+            } else if (tarefaDto.getStatus().equals(3)) {
                 tarefasListStatusDTO.getListaEmTeste().add(tarefaDto);
             } else if (tarefaDto.getStatus().equals(4)) {
                 tarefasListStatusDTO.getListaPronto().add(tarefaDto);
             }
         }
+
         return tarefasListStatusDTO;
     }
+
 
     @Override
     public TarefaDTO avancarStatus(String token, Long idtarefa) {
