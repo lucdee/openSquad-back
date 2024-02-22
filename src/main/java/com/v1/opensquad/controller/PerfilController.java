@@ -21,4 +21,13 @@ public class PerfilController {
         return ResponseEntity.ok(perfilService.save(perfilDto, isGoogle));
     }
 
+    @PostMapping("/mudarnome")
+    public ResponseEntity<PerfilDTO> mudarnome(
+                                          @RequestHeader("Authorization") String token,
+                                          @RequestParam("idperfil") Long idperfil,
+                                               @RequestParam("novonome") String novonome
+    ) {
+        return ResponseEntity.ok(perfilService.mudarNomeUsuario(token,novonome, idperfil));
+    }
+
 }

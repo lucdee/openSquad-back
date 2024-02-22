@@ -5,4 +5,6 @@ import com.v1.opensquad.dto.PerfilDTO;
 public interface PerfilService {
 
     PerfilDTO save(PerfilDTO perfilDto, Boolean isGoogle);
+
+    PerfilDTO mudarNomeUsuario(String token,String novoNome, Long idPerfil);
 }
