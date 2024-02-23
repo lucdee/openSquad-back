@@ -78,4 +78,13 @@ public class PerfilServiceImpl implements PerfilService{
          }
         throw new ProfileDataException("Perfil inexistente");
     }
+
+    @Override
+    public RetornoPerfilDTO findById(Long id) {
+        Optional<Perfil> perfil =   perfilRepository.findById(id);
+        if(perfil.isPresent()){
+            return perfilMapper.mapRetorno(perfil.get());
+        }
+        return null;
+    }
 }

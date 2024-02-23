@@ -1,6 +1,7 @@
 package com.v1.opensquad.controller;
 
 import com.v1.opensquad.dto.PerfilDTO;
+import com.v1.opensquad.dto.RetornoPerfilDTO;
 import com.v1.opensquad.service.PerfilService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -29,5 +30,13 @@ public class PerfilController {
     ) {
         return ResponseEntity.ok(perfilService.mudarNomeUsuario(token,novonome, idperfil));
     }
+
+    @GetMapping("/findbyid/{idperfil}")
+    public ResponseEntity<RetornoPerfilDTO> mudarnome(
+            @PathVariable("idperfil") Long idperfil
+    ) {
+        return ResponseEntity.ok(perfilService.findById(idperfil));
+    }
+
 
 }
