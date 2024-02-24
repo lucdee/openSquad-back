@@ -17,10 +17,11 @@ import javax.persistence.*;
 public class HistoriaDTO {
 
     private Long id;
-    private Participante idParticipante;
+    private Participante idParticipanteReporter;
     private String nome;
     private String descricao;
     private String finalData;
     private String inicialData;
     private Integer status;
+    private Participante idParticipanteAssignee;
 }

@@ -50,4 +50,14 @@ public class HistoriaController {
         return ResponseEntity.ok(historiaService.findAllAtivas(idsquad));
     }
 
+
+    @PostMapping("/adicionar-assignee-historia")
+    public ResponseEntity<HistoriaDTO> adicionarAssigneeHistoria(
+            @RequestHeader("Authorization") String token,
+            @RequestParam(value = "idhistoria") Long idhistoria,
+            @RequestParam(value = "idParticipante") Long idParticipante,
+            @RequestParam(value = "idSquad") Long idSquad
+    ) {
+        return ResponseEntity.ok(historiaService.adicionarAssigneeHistoria(token,idhistoria, idParticipante, idSquad));
+    }
 }

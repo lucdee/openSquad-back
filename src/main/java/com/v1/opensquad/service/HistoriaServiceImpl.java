@@ -43,7 +43,7 @@ public class HistoriaServiceImpl implements HistoriaService{
         if(participante == null){
             throw new AuthDataException("Somente participantes do squad podem criar histórias.");
         }
-      historiaDTO.setIdParticipante(participante);
+      historiaDTO.setIdParticipanteReporter(participante);
       historiaDTO.setStatus(1);
       historiaDTO.setInicialData(String.valueOf(LocalDateTime.now()));
       Historia historia = historiaRepository.save(historiaMapper.map(historiaDTO));
@@ -69,11 +69,11 @@ public class HistoriaServiceImpl implements HistoriaService{
 
         List<Participante> participantes = participanteRepository.findByIdSquadId(idSquad);
         for (Participante participante : participantes) {
-            historialist.addAll(historiaRepository.findByIdParticipanteId(participante.getId()));
+            historialist.addAll(historiaRepository.findByIdParticipanteReporterId(participante.getId()));
         }
 
         if (idparticipante != null) {
-            historialist.removeIf(historia -> !historia.getIdParticipante().getId().equals(idparticipante));
+            historialist.removeIf(historia -> !historia.getIdParticipanteReporter().getId().equals(idparticipante));
         }
 
         List<HistoriaDTO> historiaDTOS = historiaMapper.map3(historialist);
@@ -101,7 +101,7 @@ public class HistoriaServiceImpl implements HistoriaService{
 
         List<Participante> participantes = participanteRepository.findByIdSquadId(idSquad);
         for (Participante participante : participantes) {
-            historialist.addAll(historiaRepository.findByIdParticipanteId(participante.getId()));
+            historialist.addAll(historiaRepository.findByIdParticipanteReporterId(participante.getId()));
         }
         List<Historia> historialistFiltrada = new ArrayList<>();
         for(Historia historia: historialist){
@@ -116,5 +116,33 @@ public class HistoriaServiceImpl implements HistoriaService{
     @Override
     public HistoriaDTO findById(Long idHistoria) {
         return null;
+    }
+
+    @Override
+    public HistoriaDTO adicionarAssigneeHistoria(String token, Long idHistoria, Long idParticipante, Long idSquad) {
+        Autenticacao autenticacao = autenticacaoRepository.findByToken(token);
+        if(autenticacao == null){
+            throw new AuthDataException("Token Inválido!");
+        }
+        Participante participante = participanteRepository.findByIdPerfilIdAndIdSquadId(autenticacao.getIdPerfil().getId(), idSquad);
+
+        if(participante == null){
+            throw new AuthDataException("Participante nao encontrado!");
+        }
+
+       Optional<Participante> participante1 = participanteRepository.findById(idParticipante);
+        if(participante1.isPresent()){
+            Optional<Historia> historia =  historiaRepository.findById(idHistoria);
+            if(historia.isPresent()){
+                historia.get().setIdParticipanteAssignee(participante1.get());
+                Historia historia1 = historiaRepository.save(historia.get());
+                return historiaMapper.map(historia1);
+            }
+        }else {
+            throw new AuthDataException("Participante nao encontrado");
+        }
+
+       return  null;
+
     }
 }

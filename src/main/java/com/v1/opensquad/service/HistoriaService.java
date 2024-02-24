@@ -17,4 +17,6 @@ public interface HistoriaService {
 
     HistoriaDTO findById(Long idHistoria);
 
+    HistoriaDTO adicionarAssigneeHistoria(String token,Long idHistoria, Long idParticipante, Long idSquad);
+
 }

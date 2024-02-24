@@ -23,8 +23,12 @@ public class Historia {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "idparticipante")
-    private Participante idParticipante;
+    @JoinColumn(name = "idparticipantereporter")
+    private Participante idParticipanteReporter;
+
+    @ManyToOne
+    @JoinColumn(name = "idparticipanteassignee")
+    private Participante idParticipanteAssignee;
 
     @Column(name = "nome")
     private String nome;

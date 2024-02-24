@@ -1,10 +1,8 @@
 package com.v1.opensquad.service;
 import com.v1.opensquad.dto.ParticipanteDTO;
+import com.v1.opensquad.dto.RetornoPerfilDTO;
 import com.v1.opensquad.dto.SquadDTO;
-import com.v1.opensquad.entity.Autenticacao;
-import com.v1.opensquad.entity.Participante;
-import com.v1.opensquad.entity.Perfil;
-import com.v1.opensquad.entity.Squad;
+import com.v1.opensquad.entity.*;
 import com.v1.opensquad.mapper.ParticipanteMapper;
 import com.v1.opensquad.mapper.PerfilMapper;
 import com.v1.opensquad.repository.AutenticacaoRepository;
@@ -44,7 +42,12 @@ public class ParticipanteServiceImpl implements ParticipanteService{
 
 
        Optional<Perfil> perfil = perfilRepository.findById(idPerfil);
-        perfil.ifPresent(participante::setIdPerfil);
+        if(perfil != null){
+            RetornoPerfilDTO perfilRetorno=  perfilMapper.mapRetorno(perfil.get());
+            participante.setIdPerfil(perfilMapper.mapRetorno(perfilRetorno));
+        }
+
+
 
         Optional<Squad> squad = squadRepository.findById(participante.getIdSquad().getId());
         if(squad.isPresent()){

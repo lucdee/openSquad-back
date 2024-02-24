@@ -39,4 +39,12 @@ public class Tarefa {
 
     @Column(name = "status")
     private Integer status;
+
+    @ManyToOne
+    @JoinColumn(name = "idparticipantereporter")
+    private Participante idParticipanteReporter;
+
+    @ManyToOne
+    @JoinColumn(name = "idparticipanteassignee")
+    private Participante idParticipanteAssignee;
 }

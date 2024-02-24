@@ -22,7 +22,7 @@ public class Participante {
 
     @ManyToOne
     @JoinColumn(name = "idperfil")
-    private Perfil idPerfil;
+    private RetornoPerfil idPerfil;
 
     @Column(name = "participacao")
     private Integer participacao;

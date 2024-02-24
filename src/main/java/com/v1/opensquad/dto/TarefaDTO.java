@@ -25,4 +25,6 @@ public class TarefaDTO {
     private String inicioData;
     private String fimData;
     private Integer status;
+    private Participante idParticipanteAssignee;
+    private Participante idParticipanteReporter;
 }

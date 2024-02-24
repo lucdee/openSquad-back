@@ -54,7 +54,7 @@ public class TarefaServiceImpl implements TarefaService {
             throw new AuthDataException("historia inexistente!");
         }
 
-        Participante participante = participanteRepository.findByIdPerfilIdAndIdSquadId(autenticacao.getIdPerfil().getId(), tarefaDTO.getIdHistoria().getIdParticipante().getIdSquad().getId());
+        Participante participante = participanteRepository.findByIdPerfilIdAndIdSquadId(autenticacao.getIdPerfil().getId(), tarefaDTO.getIdHistoria().getIdParticipanteReporter().getIdSquad().getId());
         if(participante == null){
             throw new AuthDataException("Somentes participantes do squad podem criar tarefas.");
         }
@@ -77,7 +77,7 @@ public class TarefaServiceImpl implements TarefaService {
         List<Participante> participantes = participanteRepository.findByIdSquadId(idSquad);
 
         for (Participante participante : participantes) {
-            List<Historia> historialist = historiaRepository.findByIdParticipanteId(participante.getId());
+            List<Historia> historialist = historiaRepository.findByIdParticipanteReporterId(participante.getId());
 
             for(Historia historia : historialist){
                 tarefas.addAll(tarefaRepository.findByIdHistoriaId(historia.getId()));
