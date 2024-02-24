@@ -58,8 +58,10 @@ public class TarefaServiceImpl implements TarefaService {
         if(participante == null){
             throw new AuthDataException("Somentes participantes do squad podem criar tarefas.");
         }
+
         tarefaDTO.setInicioData(String.valueOf(LocalDateTime.now()));
         tarefaDTO.setStatus(1);
+        tarefaDTO.setIdParticipanteReporter(participante);
         Tarefa tarefa = tarefaMapper.map(tarefaDTO);
         Tarefa tarefa1 = tarefaRepository.save(tarefa);
         return tarefaMapper.map(tarefa1);
@@ -115,4 +117,33 @@ public class TarefaServiceImpl implements TarefaService {
         TarefaDTO tarefaDTO = tarefaMapper.map(tarefa1);
         return tarefaDTO;
     }
-}
+
+    @Override
+    public TarefaDTO adicionarAssigneeTarefa(String token, Long idTarefa, Long idParticipante, Long idSquad) {
+        Autenticacao autenticacao = autenticacaoRepository.findByToken(token);
+        if(autenticacao == null){
+            throw new AuthDataException("Token Inválido!");
+        }
+        Participante participante = participanteRepository.findByIdPerfilIdAndIdSquadId(autenticacao.getIdPerfil().getId(), idSquad);
+
+        if(participante == null){
+            throw new AuthDataException("Participante nao encontrado!");
+        }
+
+        Optional<Participante> participante1 = participanteRepository.findById(idParticipante);
+        if(participante1.isPresent()){
+            Optional<Tarefa> tarefa =  tarefaRepository.findById(idTarefa);
+            if(tarefa.isPresent()){
+                tarefa.get().setIdParticipanteAssignee(participante1.get());
+                Tarefa tarefa1 = tarefaRepository.save(tarefa.get());
+                return tarefaMapper.map(tarefa1);
+            }
+        }else {
+            throw new AuthDataException("Participante nao encontrado");
+        }
+
+        return  null;
+
+    }
+    }
+

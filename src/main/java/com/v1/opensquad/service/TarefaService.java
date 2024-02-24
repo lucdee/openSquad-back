@@ -15,4 +15,6 @@ public interface TarefaService {
  TarefasListStatusDTO findAll(Long idSquad);
 
  TarefaDTO avancarStatus(String token, Long idtarefa);
+
+ TarefaDTO adicionarAssigneeTarefa(String token,Long idTarefa, Long idParticipante, Long idSquad);
 }

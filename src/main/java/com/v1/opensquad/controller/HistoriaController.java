@@ -51,7 +51,7 @@ public class HistoriaController {
     }
 
 
-    @PostMapping("/adicionar-assignee-historia")
+    @PostMapping("/adicionar-assignee")
     public ResponseEntity<HistoriaDTO> adicionarAssigneeHistoria(
             @RequestHeader("Authorization") String token,
             @RequestParam(value = "idhistoria") Long idhistoria,

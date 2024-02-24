@@ -50,4 +50,13 @@ public class TarefaController {
         return ResponseEntity.ok(tarefaService.avancarStatus( token, idtarefa));
     }
 
+    @PostMapping("/adicionar-assignee")
+    public ResponseEntity<TarefaDTO> adicionarAssigneeHistoria(
+            @RequestHeader("Authorization") String token,
+            @RequestParam(value = "idtarefa") Long idtarefa,
+            @RequestParam(value = "idParticipante") Long idParticipante,
+            @RequestParam(value = "idSquad") Long idSquad
+    ) {
+        return ResponseEntity.ok(tarefaService.adicionarAssigneeTarefa(token,idtarefa, idParticipante, idSquad));
+    }
 }
