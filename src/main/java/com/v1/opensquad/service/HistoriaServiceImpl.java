@@ -5,10 +5,12 @@ import com.v1.opensquad.dto.HistoriasListStatusDTO;
 import com.v1.opensquad.entity.Autenticacao;
 import com.v1.opensquad.entity.Historia;
 import com.v1.opensquad.entity.Participante;
+import com.v1.opensquad.entity.Tarefa;
 import com.v1.opensquad.mapper.HistoriaMapper;
 import com.v1.opensquad.repository.AutenticacaoRepository;
 import com.v1.opensquad.repository.HistoriaRepository;
 import com.v1.opensquad.repository.ParticipanteRepository;
+import com.v1.opensquad.repository.TarefaRepository;
 import com.v1.opensquad.service.exception.AuthDataException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,8 @@ public class HistoriaServiceImpl implements HistoriaService{
     private final HistoriaRepository historiaRepository;
 
     private final HistoriaMapper historiaMapper;
+
+    private final TarefaRepository tarefaRepository;
 
     @Override
     public HistoriaDTO save(Long idSquad, String token, HistoriaDTO historiaDTO) {
@@ -144,5 +148,29 @@ public class HistoriaServiceImpl implements HistoriaService{
 
        return  null;
 
+    }
+
+    @Override
+    public String deleteById(String token, Long idHistoria, Long idSquad) {
+        Autenticacao autenticacao = autenticacaoRepository.findByToken(token);
+        if(autenticacao == null){
+            throw new AuthDataException("Token Inválido!");
+        }
+        Participante participante = participanteRepository.findByIdPerfilIdAndIdSquadId(autenticacao.getIdPerfil().getId(), idSquad);
+
+        if(participante == null){
+            throw new AuthDataException("Participante nao encontrado!");
+        }
+        Optional<Historia> historia = historiaRepository.findById(idHistoria);
+        if(historia.isPresent()){
+           List<Tarefa> tarefas = tarefaRepository.findByIdHistoriaId(historia.get().getId());
+           for(Tarefa tarefa : tarefas){
+               tarefaRepository.deleteById(tarefa.getId());
+           }
+            historiaRepository.deleteById(historia.get().getId());
+            return "História Deletada";
+        }else {
+            throw new AuthDataException("história não encontrada!");
+        }
     }
 }

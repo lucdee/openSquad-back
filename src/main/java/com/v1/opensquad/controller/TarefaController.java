@@ -59,4 +59,23 @@ public class TarefaController {
     ) {
         return ResponseEntity.ok(tarefaService.adicionarAssigneeTarefa(token,idtarefa, idParticipante, idSquad));
     }
+
+    @DeleteMapping()
+    public ResponseEntity<String> deleteById(
+            @RequestHeader("Authorization") String token,
+            @RequestParam(value = "idtarefa") Long idtarefa,
+            @RequestParam(value = "idSquad") Long idSquad
+    ) {
+        return ResponseEntity.ok(tarefaService.deleteById(token,idtarefa, idSquad));
+    }
+
+    @PutMapping("/edit")
+    public ResponseEntity<TarefaDTO> deleteById(
+            @RequestHeader("Authorization") String token,
+            @RequestParam(value = "idtarefa") Long idtarefa,
+            @RequestParam(value = "idSquad") Long idSquad,
+            @RequestBody TarefaDTO tarefaDTO
+    ) {
+        return ResponseEntity.ok(tarefaService.edit(token,idtarefa, idSquad, tarefaDTO));
+    }
 }

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.bind.annotation.XmlElementDecl;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -59,5 +60,14 @@ public class HistoriaController {
             @RequestParam(value = "idSquad") Long idSquad
     ) {
         return ResponseEntity.ok(historiaService.adicionarAssigneeHistoria(token,idhistoria, idParticipante, idSquad));
+    }
+
+    @DeleteMapping()
+    public ResponseEntity<String> deleteById(
+            @RequestHeader("Authorization") String token,
+            @RequestParam(value = "idhistoria") Long idhistoria,
+            @RequestParam(value = "idSquad") Long idSquad
+    ) {
+        return ResponseEntity.ok(historiaService.deleteById(token,idhistoria, idSquad));
     }
 }

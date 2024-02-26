@@ -17,4 +17,8 @@ public interface TarefaService {
  TarefaDTO avancarStatus(String token, Long idtarefa);
 
  TarefaDTO adicionarAssigneeTarefa(String token,Long idTarefa, Long idParticipante, Long idSquad);
+
+ String deleteById(String token, Long idtarefa, Long idSquad);
+
+ TarefaDTO edit(String token, Long idtarefa, Long idSquad, TarefaDTO tarefaDTO);
 }

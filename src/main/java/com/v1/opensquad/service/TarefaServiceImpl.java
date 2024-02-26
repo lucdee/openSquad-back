@@ -145,5 +145,49 @@ public class TarefaServiceImpl implements TarefaService {
         return  null;
 
     }
+
+    @Override
+    public String deleteById(String token, Long idtarefa, Long idSquad) {
+        Autenticacao autenticacao = autenticacaoRepository.findByToken(token);
+        if(autenticacao == null){
+            throw new AuthDataException("Token Inválido!");
+        }
+        Participante participante = participanteRepository.findByIdPerfilIdAndIdSquadId(autenticacao.getIdPerfil().getId(), idSquad);
+
+        if(participante == null){
+            throw new AuthDataException("Participante nao encontrado!");
+        }
+        Optional<Tarefa> tarefa = tarefaRepository.findById(idtarefa);
+        if(tarefa.isPresent()){
+            tarefaRepository.deleteById(tarefa.get().getId());
+            return "Tarefa Deletada";
+        }else {
+            throw new AuthDataException("Tarefa não encontrada!");
+        }
     }
+
+    @Override
+    public TarefaDTO edit(String token, Long idtarefa, Long idSquad, TarefaDTO tarefaDTO) {
+        Autenticacao autenticacao = autenticacaoRepository.findByToken(token);
+        if(autenticacao == null){
+            throw new AuthDataException("Token Inválido!");
+        }
+        Participante participante = participanteRepository.findByIdPerfilIdAndIdSquadId(autenticacao.getIdPerfil().getId(), idSquad);
+
+        if(participante == null){
+            throw new AuthDataException("Participante nao encontrado!");
+        }
+        Optional<Tarefa> tarefa = tarefaRepository.findById(idtarefa);
+        if(tarefa.isPresent()){
+          tarefa.get().setNome(tarefaDTO.getNome());
+          tarefa.get().setDescricao(tarefaDTO.getDescricao());
+          Tarefa tarefa1 = tarefaRepository.save(tarefa.get());
+          return tarefaMapper.map(tarefa1);
+        }else {
+            throw new AuthDataException("Tarefa inexistente");
+        }
+
+    }
+
+}
 
