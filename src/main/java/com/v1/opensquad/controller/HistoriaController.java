@@ -4,6 +4,7 @@ package com.v1.opensquad.controller;
 import com.v1.opensquad.dto.ConviteDTO;
 import com.v1.opensquad.dto.HistoriaDTO;
 import com.v1.opensquad.dto.HistoriasListStatusDTO;
+import com.v1.opensquad.dto.TarefaDTO;
 import com.v1.opensquad.service.HistoriaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -69,5 +70,15 @@ public class HistoriaController {
             @RequestParam(value = "idSquad") Long idSquad
     ) {
         return ResponseEntity.ok(historiaService.deleteById(token,idhistoria, idSquad));
+    }
+
+    @PutMapping("/edit")
+    public ResponseEntity<HistoriaDTO> editById(
+            @RequestHeader("Authorization") String token,
+            @RequestParam(value = "idhistoria") Long idhistoria,
+            @RequestParam(value = "idSquad") Long idSquad,
+            @RequestBody HistoriaDTO historiaDTO
+    ) {
+        return ResponseEntity.ok(historiaService.edit(token,idhistoria, idSquad, historiaDTO));
     }
 }

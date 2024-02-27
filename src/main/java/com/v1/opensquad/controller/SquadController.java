@@ -73,4 +73,13 @@ public class SquadController {
             @RequestHeader("Authorization") String token) throws IOException {
         return ResponseEntity.ok(squadService.curtirSquad(idsquad, token));
     }
+
+    @PutMapping("/edit")
+    public ResponseEntity<SquadDTO> edit(
+            @RequestParam(value = "idsquad", required = false) Long idsquad,
+            @RequestHeader("Authorization") String token,
+            @RequestBody SquadDTO squadDTO
+            )  {
+        return ResponseEntity.ok(squadService.edit( token, idsquad,squadDTO));
+    }
 }

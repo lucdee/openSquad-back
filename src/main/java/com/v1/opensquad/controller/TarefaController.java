@@ -70,7 +70,7 @@ public class TarefaController {
     }
 
     @PutMapping("/edit")
-    public ResponseEntity<TarefaDTO> deleteById(
+    public ResponseEntity<TarefaDTO> editById(
             @RequestHeader("Authorization") String token,
             @RequestParam(value = "idtarefa") Long idtarefa,
             @RequestParam(value = "idSquad") Long idSquad,

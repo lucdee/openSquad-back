@@ -25,4 +25,6 @@ public interface SquadService {
 
     String curtirSquad(Long idSquad, String token);
 
+    SquadDTO edit(String token, Long idSquad, SquadDTO squadDTO);
+
 }

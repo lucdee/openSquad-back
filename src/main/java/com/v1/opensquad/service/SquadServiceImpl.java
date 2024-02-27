@@ -215,5 +215,32 @@ public class SquadServiceImpl implements SquadService{
         return "Squad Curtido!";
     }
 
+    @Override
+    public SquadDTO edit(String token, Long idSquad, SquadDTO squadDTO) {
+        RetornoPerfilDTO retornoPerfilDTO = autenticacaoService.verificarPerfil(token);
+        if(retornoPerfilDTO == null){
+            throw new AuthDataException("Token invalido");
+        }
+        Participante participante = participanteRepository.findByIdPerfilIdAndIdSquadId(retornoPerfilDTO.getId(), idSquad);
+       if(participante == null){
+           throw new AuthDataException("Você não participa do squad");
+       }
+        Optional<Squad> squad = squadRepository.findById(idSquad);
+       if(squad.isPresent()){
+           squad.get().setNome(squadDTO.getNome());
+           squad.get().setDescricao(squadDTO.getDescricao());
+
+           Optional<CategoriaSquad> categoriaSquad = categoriaSquadRepository.findById(squadDTO.getArea().getId());
+           if(categoriaSquad.isPresent()){
+               squad.get().setArea(categoriaSquad.get());
+                Squad squad1 =  squadRepository.save(squad.get());
+                return squadMapper.map(squad1);
+           }
+
+       }
+        throw new AuthDataException("Squad não existe");
+
+    }
+
 
 }

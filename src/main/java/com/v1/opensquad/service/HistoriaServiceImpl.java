@@ -173,4 +173,27 @@ public class HistoriaServiceImpl implements HistoriaService{
             throw new AuthDataException("história não encontrada!");
         }
     }
+
+    @Override
+    public HistoriaDTO edit(String token, Long idHistoria, Long idSquad, HistoriaDTO historiaDTO) {
+        Autenticacao autenticacao = autenticacaoRepository.findByToken(token);
+        if(autenticacao == null){
+            throw new AuthDataException("Token Inválido!");
+        }
+        Participante participante = participanteRepository.findByIdPerfilIdAndIdSquadId(autenticacao.getIdPerfil().getId(), idSquad);
+
+        if(participante == null){
+            throw new AuthDataException("Participante nao encontrado!");
+        }
+
+        Optional<Historia> historia = historiaRepository.findById(idHistoria);
+        if(historia.isPresent()){
+            historia.get().setNome(historiaDTO.getNome());
+            historia.get().setDescricao(historiaDTO.getDescricao());
+            Historia tarefa1 = historiaRepository.save(historia.get());
+            return historiaMapper.map(tarefa1);
+        }else {
+            throw new AuthDataException("Tarefa inexistente");
+        }
+    }
 }
